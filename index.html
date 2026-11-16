@@ -266,5 +266,72 @@
             }
         });
     </script>
+    <!-- Вікно подяки та відгуку після покупки -->
+<div id="reviewModal" style="display: none; position: fixed; inset: 0; background: rgba(7, 15, 30, 0.9); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px);">
+  <div style="background: #0f1d36; border: 1px solid #1e3a6e; border-radius: 20px; padding: 26px 22px; max-width: 340px; width: 100%; text-align: center; color: #f0f6ff; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);">
+    <div style="font-size: 42px; margin-bottom: 10px;">✅</div>
+    <h2 style="margin: 0 0 8px; font-size: 19px; font-weight: 700;">Дякуємо за покупку!</h2>
+    <p style="margin: 0 0 16px; font-size: 13px; color: #7b96c4; line-height: 1.4;">
+      Найближчим часом з вами зв'яжеться менеджер для видачі товару.<br><br>Залиште свій відгук:
+    </p>
+
+    <!-- Шкала з 5 зірочками -->
+    <div id="starContainer" style="font-size: 32px; margin-bottom: 16px; cursor: pointer; letter-spacing: 5px; user-select: none;">
+      <span onclick="setRating(1)" style="color: #3a4f7a; transition: 0.2s;">★</span>
+      <span onclick="setRating(2)" style="color: #3a4f7a; transition: 0.2s;">★</span>
+      <span onclick="setRating(3)" style="color: #3a4f7a; transition: 0.2s;">★</span>
+      <span onclick="setRating(4)" style="color: #3a4f7a; transition: 0.2s;">★</span>
+      <span onclick="setRating(5)" style="color: #3a4f7a; transition: 0.2s;">★</span>
+    </div>
+
+    <!-- Поле для відгуку (макс 60 символів) -->
+    <div style="position: relative; margin-bottom: 16px;">
+      <textarea id="reviewText" maxlength="60" oninput="updateCounter(this)" placeholder="Напишіть відгук..." style="width: 100%; height: 68px; background: #070f1e; border: 1px solid #1e3a6e; border-radius: 12px; padding: 10px 12px; color: #f0f6ff; font-size: 14px; resize: none; box-sizing: border-box; outline: none;"></textarea>
+      <div id="charCounter" style="position: absolute; right: 10px; bottom: 8px; font-size: 11px; color: #7b96c4;">0/60</div>
+    </div>
+
+    <!-- Кнопка відправки -->
+    <button onclick="sendReviewAndClose()" style="width: 100%; padding: 13px; border: none; border-radius: 12px; background: #2b82ff; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(43, 130, 255, 0.35);">
+      Надіслати відгук
+    </button>
+  </div>
+</div>
+
+<script>
+  let selectedRating = 5;
+
+  // Цю функцію викликай замість tg.sendData(...) при натисканні кнопки замовлення
+  function showReviewWindow() {
+    document.getElementById('reviewModal').style.display = 'flex';
+  }
+
+  // Заповнення зірочок при кліку
+  function setRating(rating) {
+    selectedRating = rating;
+    const stars = document.querySelectorAll('#starContainer span');
+    stars.forEach((star, index) => {
+      star.style.color = index < rating ? '#ffd700' : '#3a4f7a';
+    });
+  }
+
+  // Лічильник символів (до 60)
+  function updateCounter(textarea) {
+    document.getElementById('charCounter').innerText = `${textarea.value.length}/60`;
+  }
+
+  // Відправка відгуку в бота та закриття Mini App
+  function sendReviewAndClose() {
+    const text = document.getElementById('reviewText').value.trim();
+    const reviewData = {
+      type: "review",
+      rating: selectedRating,
+      text: text || "Без коментаря"
+    };
+
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.sendData(JSON.stringify(reviewData));
+    }
+  }
+</script>
 </body>
 </html>
