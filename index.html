@@ -1,337 +1,305 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>stariv Shop</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --bg: #070f1e;
-            --sec-bg: #0f1d36;
-            --card-hover: #16294a;
-            --border: #1e3a6e;
-            --text: #f0f6ff;
-            --hint: #7b96c4;
-            --accent: #2b82ff;
-            --accent-glow: rgba(43, 130, 255, 0.25);
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            padding: 16px; 
-            padding-bottom: 85px;
-            background-image: radial-gradient(circle at 50% 0%, #11264d 0%, #070f1e 65%);
-            min-height: 100vh;
-        }
-        
-        .header { text-align: center; margin-bottom: 22px; padding-top: 6px; }
-        .header h1 { 
-            font-size: 26px; 
-            font-weight: 800; 
-            letter-spacing: 0.5px;
-            background: linear-gradient(90deg, #ffffff, #6eb2ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .header p { color: var(--hint); font-size: 13px; margin-top: 5px; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Stariv Shop</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-        .tabs { 
-            display: flex; 
-            background: var(--sec-bg); 
-            border: 1px solid var(--border);
-            border-radius: 14px; 
-            padding: 4px; 
-            margin-bottom: 20px; 
-        }
-        .tab { 
-            flex: 1; 
-            text-align: center; 
-            padding: 10px 0; 
-            font-size: 14px; 
-            font-weight: 600; 
-            border-radius: 10px; 
-            cursor: pointer; 
-            transition: 0.25s; 
-            color: var(--hint); 
-        }
-        .tab.active { 
-            background: var(--accent); 
-            color: #ffffff; 
-            box-shadow: 0 4px 12px var(--accent-glow);
-        }
+    body {
+      background-color: #070f1e;
+      color: #f0f6ff;
+      padding: 16px;
+      padding-bottom: 80px;
+      user-select: none;
+    }
 
-        .section { display: none; animation: fadeIn 0.25s ease; }
-        .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
-        .card { 
-            background: var(--sec-bg); 
-            padding: 16px 12px; 
-            border-radius: 14px; 
-            text-align: center; 
-            border: 1.5px solid var(--border); 
-            cursor: pointer; 
-            transition: 0.2s; 
-        }
-        .card:active { transform: scale(0.97); }
-        .card.selected { 
-            border-color: var(--accent); 
-            background: linear-gradient(145deg, #13284d, #0d1c38);
-            box-shadow: 0 0 16px var(--accent-glow);
-        }
-        .card-title { font-size: 16px; font-weight: 700; color: #ffffff; }
-        .card-price { font-size: 13px; color: #6eb2ff; font-weight: 600; margin-top: 5px; }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #ffffff;
+    }
 
-        .input-group { 
-            background: var(--sec-bg); 
-            border: 1px solid var(--border);
-            padding: 16px; 
-            border-radius: 14px; 
-            margin-bottom: 16px; 
-        }
-        .input-group label { display: block; font-size: 13px; color: var(--hint); margin-bottom: 10px; }
-        .input-group input { 
-            width: 100%; 
-            background: var(--bg); 
-            border: 1.5px solid var(--border); 
-            color: #ffffff; 
-            padding: 13px; 
-            border-radius: 10px; 
-            font-size: 16px; 
-            font-weight: 600;
-            outline: none; 
-            transition: 0.2s;
-        }
-        .input-group input:focus { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
-        .input-group input::placeholder { color: #466191; font-weight: 400; }
+    .header p {
+      font-size: 13px;
+      color: #7b96c4;
+      margin-top: 4px;
+    }
 
-        .summary { 
-            background: linear-gradient(90deg, #0f1d36, #14284b); 
-            border: 1px solid var(--border);
-            padding: 16px 18px; 
-            border-radius: 14px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-        }
-        .summary span { color: var(--hint); font-size: 14px; }
-        .summary strong { font-size: 21px; color: #5ca4ff; font-weight: 800; }
-    </style>
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #9ab3de;
+      margin: 18px 0 10px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      background: #0f1d36;
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .card.selected {
+      border-color: #2b82ff;
+      background: #142a52;
+      box-shadow: 0 0 15px rgba(43, 130, 255, 0.35);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .card-price {
+      font-size: 13px;
+      color: #63a4ff;
+      font-weight: 600;
+    }
+
+    .gram-box {
+      background: #0f1d36;
+      border: 1px solid #1e3a6e;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .gram-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .gram-tab {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #1e3a6e;
+      background: #070f1e;
+      color: #7b96c4;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .gram-tab.selected {
+      background: #2b82ff;
+      border-color: #2b82ff;
+      color: #ffffff;
+    }
+
+    .gram-input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #1e3a6e;
+      background: #070f1e;
+      color: #ffffff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .gram-input:focus {
+      border-color: #2b82ff;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>⭐ stariv Shop</h1>
-        <p>⚡ Миттєва доставка • Середній час ~1 хв</p>
-    </div>
-
-    <div class="tabs">
-        <div class="tab active" onclick="switchTab('stars', this)">⭐ Stars</div>
-        <div class="tab" onclick="switchTab('premium', this)">💎 Premium</div>
-        <div class="tab" onclick="switchTab('gram', this)">🪙 GRAM</div>
-    </div>
-
-    <!-- СЕКЦІЯ STARS -->
-    <div id="stars" class="section active">
-        <div class="grid">
-            <div class="card" onclick="selectStars(50, this)"><div class="card-title">50 Stars</div><div class="card-price">40 грн</div></div>
-            <div class="card" onclick="selectStars(100, this)"><div class="card-title">100 Stars</div><div class="card-price">80 грн</div></div>
-            <div class="card" onclick="selectStars(500, this)"><div class="card-title">500 Stars</div><div class="card-price">400 грн</div></div>
-            <div class="card" onclick="selectStars(1000, this)"><div class="card-title">1000 Stars</div><div class="card-price">800 грн</div></div>
-        </div>
-        <div class="input-group">
-            <label>Або введіть свою кількість зірок (1 ⭐ = 0.8 грн):</label>
-            <input type="number" id="starsInput" placeholder="Наприклад: 250" oninput="inputStars(this.value)">
-        </div>
-    </div>
-
-    <!-- СЕКЦІЯ PREMIUM -->
-    <div id="premium" class="section">
-        <div class="grid" style="grid-template-columns: 1fr;">
-            <div class="card" onclick="selectPrem('3m', '3 місяці', 560, this)"><div class="card-title">💎 3 місяці</div><div class="card-price">560 грн</div></div>
-            <div class="card" onclick="selectPrem('6m', '6 місяців', 740, this)"><div class="card-title">💎 6 місяців</div><div class="card-price">740 грн</div></div>
-            <div class="card" onclick="selectPrem('12m', '12 місяців', 1340, this)"><div class="card-title">👑 12 місяців (Найвигідніше)</div><div class="card-price">1340 грн</div></div>
-        </div>
-    </div>
-
-    <!-- СЕКЦІЯ GRAM -->
-    <div id="gram" class="section">
-        <div class="grid">
-            <div class="card selected" id="gramBuyBtn" onclick="setGramMode('gramb', this)"><div class="card-title">📥 Купити</div><div class="card-price">56.1 грн / 1 GRAM</div></div>
-            <div class="card" id="gramSellBtn" onclick="setGramMode('grams', this)"><div class="card-title">📤 Продати</div><div class="card-price">47.7 грн / 1 GRAM</div></div>
-        </div>
-        <div class="input-group">
-            <label>Кількість монет GRAM:</label>
-            <input type="number" id="gramInput" placeholder="Введіть кількість (від 1)" oninput="calcGram()">
-        </div>
-    </div>
-
-    <div class="summary">
-        <span>До сплати / виплати:</span>
-        <strong id="totalPrice">0.0 грн</strong>
-    </div>
-
-    <script>
-        const tg = window.Telegram.WebApp;
-        tg.expand();
-        tg.setHeaderColor('#070f1e');
-        tg.setBackgroundColor('#070f1e');
-        tg.MainButton.setParams({ color: '#2b82ff', text_color: '#ffffff' });
-
-        let orderData = null;
-        let gramMode = 'gramb';
-
-        function updateMainButton(text, price) {
-            document.getElementById('totalPrice').innerText = price.toFixed(1) + ' грн';
-            if (price > 0) {
-                tg.MainButton.setText(text);
-                tg.MainButton.show();
-            } else {
-                tg.MainButton.hide();
-            }
-        }
-
-        function clearSelections() {
-            document.querySelectorAll('.card').forEach(c => {
-                if (c.id !== 'gramBuyBtn' && c.id !== 'gramSellBtn') c.classList.remove('selected');
-            });
-        }
-
-        function switchTab(tabId, el) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById(tabId).classList.add('active');
-            orderData = null;
-            updateMainButton('', 0);
-        }
-
-        function selectStars(qty, el) {
-            clearSelections();
-            el.classList.add('selected');
-            document.getElementById('starsInput').value = qty;
-            let price = qty * 0.8;
-            orderData = { type: 'stars', qty: qty, price: price };
-            updateMainButton(`Купити ${qty} Stars за ${price.toFixed(1)} грн`, price);
-        }
-
-        function inputStars(val) {
-            clearSelections();
-            let qty = parseInt(val);
-            if (qty > 0) {
-                let price = qty * 0.8;
-                orderData = { type: 'stars', qty: qty, price: price };
-                updateMainButton(`Купити ${qty} Stars за ${price.toFixed(1)} грн`, price);
-            } else {
-                orderData = null;
-                updateMainButton('', 0);
-            }
-        }
-
-        function selectPrem(code, name, price, el) {
-            clearSelections();
-            el.classList.add('selected');
-            orderData = { type: 'prem', qty: code, name: name, price: price };
-            updateMainButton(`Оформити Premium (${name}) — ${price} грн`, price);
-        }
-
-        function setGramMode(mode, el) {
-            gramMode = mode;
-            document.getElementById('gramBuyBtn').classList.remove('selected');
-            document.getElementById('gramSellBtn').classList.remove('selected');
-            el.classList.add('selected');
-            calcGram();
-        }
-
-        function calcGram() {
-            let qty = parseInt(document.getElementById('gramInput').value);
-            if (qty > 0) {
-                let rate = gramMode === 'gramb' ? 56.1 : 47.7;
-                let price = qty * rate;
-                let action = gramMode === 'gramb' ? 'Купити' : 'Продати';
-                orderData = { type: gramMode, qty: qty, price: price };
-                updateMainButton(`${action} ${qty} GRAM за ${price.toFixed(1)} грн`, price);
-            } else {
-                orderData = null;
-                updateMainButton('', 0);
-            }
-        }
-
-        tg.MainButton.onClick(() => {
-            if (orderData) {
-                tg.sendData(JSON.stringify(orderData));
-            }
-        });
-    </script>
-    <!-- Вікно подяки та відгуку після покупки -->
-<div id="reviewModal" style="display: none; position: fixed; inset: 0; background: rgba(7, 15, 30, 0.9); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px);">
-  <div style="background: #0f1d36; border: 1px solid #1e3a6e; border-radius: 20px; padding: 26px 22px; max-width: 340px; width: 100%; text-align: center; color: #f0f6ff; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);">
-    <div style="font-size: 42px; margin-bottom: 10px;">✅</div>
-    <h2 style="margin: 0 0 8px; font-size: 19px; font-weight: 700;">Дякуємо за покупку!</h2>
-    <p style="margin: 0 0 16px; font-size: 13px; color: #7b96c4; line-height: 1.4;">
-      Найближчим часом з вами зв'яжеться менеджер для видачі товару.<br><br>Залиште свій відгук:
-    </p>
-
-    <!-- Шкала з 5 зірочками -->
-    <div id="starContainer" style="font-size: 32px; margin-bottom: 16px; cursor: pointer; letter-spacing: 5px; user-select: none;">
-      <span onclick="setRating(1)" style="color: #3a4f7a; transition: 0.2s;">★</span>
-      <span onclick="setRating(2)" style="color: #3a4f7a; transition: 0.2s;">★</span>
-      <span onclick="setRating(3)" style="color: #3a4f7a; transition: 0.2s;">★</span>
-      <span onclick="setRating(4)" style="color: #3a4f7a; transition: 0.2s;">★</span>
-      <span onclick="setRating(5)" style="color: #3a4f7a; transition: 0.2s;">★</span>
-    </div>
-
-    <!-- Поле для відгуку (макс 60 символів) -->
-    <div style="position: relative; margin-bottom: 16px;">
-      <textarea id="reviewText" maxlength="60" oninput="updateCounter(this)" placeholder="Напишіть відгук..." style="width: 100%; height: 68px; background: #070f1e; border: 1px solid #1e3a6e; border-radius: 12px; padding: 10px 12px; color: #f0f6ff; font-size: 14px; resize: none; box-sizing: border-box; outline: none;"></textarea>
-      <div id="charCounter" style="position: absolute; right: 10px; bottom: 8px; font-size: 11px; color: #7b96c4;">0/60</div>
-    </div>
-
-    <!-- Кнопка відправки -->
-    <button onclick="sendReviewAndClose()" style="width: 100%; padding: 13px; border: none; border-radius: 12px; background: #2b82ff; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(43, 130, 255, 0.35);">
-      Надіслати відгук
-    </button>
+  <div class="header">
+    <h1>🛍 Stariv Shop</h1>
+    <p>Швидке поповнення Stars, Premium та GRAM</p>
   </div>
-</div>
 
-<script>
-  let selectedRating = 5;
+  <div class="section-title">⭐ Telegram Stars</div>
+  <div class="grid">
+    <div class="card" onclick="selectStars(50, 45, this)">
+      <div class="card-title">50 Stars</div>
+      <div class="card-price">45 грн</div>
+    </div>
+    <div class="card" onclick="selectStars(100, 88, this)">
+      <div class="card-title">100 Stars</div>
+      <div class="card-price">88 грн</div>
+    </div>
+    <div class="card" onclick="selectStars(250, 215, this)">
+      <div class="card-title">250 Stars</div>
+      <div class="card-price">215 грн</div>
+    </div>
+    <div class="card" onclick="selectStars(500, 425, this)">
+      <div class="card-title">500 Stars</div>
+      <div class="card-price">425 грн</div>
+    </div>
+  </div>
 
-  // Цю функцію викликай замість tg.sendData(...) при натисканні кнопки замовлення
-  function showReviewWindow() {
-    document.getElementById('reviewModal').style.display = 'flex';
-  }
+  <div class="section-title">💎 Telegram Premium</div>
+  <div class="grid">
+    <div class="card" onclick="selectPrem('3m', '3 місяці', 520, this)">
+      <div class="card-title">3 місяці</div>
+      <div class="card-price">520 грн</div>
+    </div>
+    <div class="card" onclick="selectPrem('6m', '6 місяців', 750, this)">
+      <div class="card-title">6 місяців</div>
+      <div class="card-price">750 грн</div>
+    </div>
+    <div class="card" onclick="selectPrem('12m', '12 місяців', 1350, this)">
+      <div class="card-title">12 місяців</div>
+      <div class="card-price">1350 грн</div>
+    </div>
+  </div>
 
-  // Заповнення зірочок при кліку
-  function setRating(rating) {
-    selectedRating = rating;
-    const stars = document.querySelectorAll('#starContainer span');
-    stars.forEach((star, index) => {
-      star.style.color = index < rating ? '#ffd700' : '#3a4f7a';
-    });
-  }
+  <div class="section-title">🪙 Обмін GRAM</div>
+  <div class="gram-box">
+    <div class="gram-tabs">
+      <button id="gramBuyBtn" class="gram-tab selected" onclick="setGramMode('gramb', this)">Купити (56.1 грн)</button>
+      <button id="gramSellBtn" class="gram-tab" onclick="setGramMode('grams', this)">Продати (47.7 грн)</button>
+    </div>
+    <input id="gramInput" class="gram-input" type="number" min="1" placeholder="Введіть кількість GRAM..." oninput="calcGram()" />
+  </div>
 
-  // Лічильник символів (до 60)
-  function updateCounter(textarea) {
-    document.getElementById('charCounter').innerText = `${textarea.value.length}/60`;
-  }
+  <!-- Вікно подяки та відгуку після покупки -->
+  <div id="reviewModal" style="display: none; position: fixed; inset: 0; background: rgba(7, 15, 30, 0.9); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(6px);">
+    <div style="background: #0f1d36; border: 1px solid #1e3a6e; border-radius: 20px; padding: 26px 22px; max-width: 340px; width: 100%; text-align: center; color: #f0f6ff; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6);">
+      <div style="font-size: 42px; margin-bottom: 10px;">✅</div>
+      <h2 style="margin: 0 0 8px; font-size: 19px; font-weight: 700;">Дякуємо за покупку!</h2>
+      <p style="margin: 0 0 16px; font-size: 13px; color: #7b96c4; line-height: 1.4;">
+        Найближчим часом з вами зв'яжеться менеджер для видачі товару.<br><br>Залиште свій відгук:
+      </p>
 
-  // Відправка відгуку в бота та закриття Mini App
-  function sendReviewAndClose() {
-    const text = document.getElementById('reviewText').value.trim();
-    const reviewData = {
-      type: "review",
-      rating: selectedRating,
-      text: text || "Без коментаря"
-    };
+      <!-- Шкала з 5 зірочками -->
+      <div id="starContainer" style="font-size: 32px; margin-bottom: 16px; cursor: pointer; letter-spacing: 5px; user-select: none;">
+        <span onclick="setRating(1)" style="color: #ffd700; transition: 0.2s;">★</span>
+        <span onclick="setRating(2)" style="color: #ffd700; transition: 0.2s;">★</span>
+        <span onclick="setRating(3)" style="color: #ffd700; transition: 0.2s;">★</span>
+        <span onclick="setRating(4)" style="color: #ffd700; transition: 0.2s;">★</span>
+        <span onclick="setRating(5)" style="color: #ffd700; transition: 0.2s;">★</span>
+      </div>
 
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.sendData(JSON.stringify(reviewData));
+      <!-- Поле для відгуку (макс 60 символів) -->
+      <div style="position: relative; margin-bottom: 16px;">
+        <textarea id="reviewText" maxlength="60" oninput="updateCounter(this)" placeholder="Напишіть відгук..." style="width: 100%; height: 68px; background: #070f1e; border: 1px solid #1e3a6e; border-radius: 12px; padding: 10px 12px; color: #f0f6ff; font-size: 14px; resize: none; box-sizing: border-box; outline: none;"></textarea>
+        <div id="charCounter" style="position: absolute; right: 10px; bottom: 8px; font-size: 11px; color: #7b96c4;">0/60</div>
+      </div>
+
+      <!-- Кнопка відправки -->
+      <button onclick="sendReviewAndClose()" style="width: 100%; padding: 13px; border: none; border-radius: 12px; background: #2b82ff; color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(43, 130, 255, 0.35);">
+        Надіслати відгук
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    let orderData = null;
+    let gramMode = 'gramb';
+    let selectedRating = 5;
+
+    function clearSelections() {
+      document.querySelectorAll('.card').forEach(el => el.classList.remove('selected'));
     }
-  }
-</script>
+
+    function updateMainButton(text, price) {
+      if (price > 0 && text) {
+        tg.MainButton.setText(text);
+        tg.MainButton.show();
+      } else {
+        tg.MainButton.hide();
+      }
+    }
+
+    function selectStars(qty, price, el) {
+      clearSelections();
+      document.getElementById('gramInput').value = '';
+      el.classList.add('selected');
+      orderData = { type: 'stars', qty: qty, price: price };
+      updateMainButton(`Купити ${qty} Stars — ${price} грн`, price);
+    }
+
+    function selectPrem(code, name, price, el) {
+      clearSelections();
+      document.getElementById('gramInput').value = '';
+      el.classList.add('selected');
+      orderData = { type: 'prem', qty: code, name: name, price: price };
+      updateMainButton(`Оформити Premium (${name}) — ${price} грн`, price);
+    }
+
+    function setGramMode(mode, el) {
+      gramMode = mode;
+      document.getElementById('gramBuyBtn').classList.remove('selected');
+      document.getElementById('gramSellBtn').classList.remove('selected');
+      el.classList.add('selected');
+      calcGram();
+    }
+
+    function calcGram() {
+      clearSelections();
+      let qty = parseInt(document.getElementById('gramInput').value);
+      if (qty > 0) {
+        let rate = gramMode === 'gramb' ? 56.1 : 47.7;
+        let price = +(qty * rate).toFixed(1);
+        let action = gramMode === 'gramb' ? 'Купити' : 'Продати';
+        orderData = { type: gramMode, qty: qty, price: price };
+        updateMainButton(`${action} ${qty} GRAM за ${price} грн`, price);
+      } else {
+        orderData = null;
+        updateMainButton('', 0);
+      }
+    }
+
+    // При натисканні головної кнопки оплати показуємо вікно відгуку
+    tg.MainButton.onClick(() => {
+      if (orderData) {
+        tg.MainButton.hide();
+        document.getElementById('reviewModal').style.display = 'flex';
+      }
+    });
+
+    function setRating(rating) {
+      selectedRating = rating;
+      const stars = document.querySelectorAll('#starContainer span');
+      stars.forEach((star, index) => {
+        star.style.color = index < rating ? '#ffd700' : '#3a4f7a';
+      });
+    }
+
+    function updateCounter(textarea) {
+      document.getElementById('charCounter').innerText = `${textarea.value.length}/60`;
+    }
+
+    function sendReviewAndClose() {
+      const text = document.getElementById('reviewText').value.trim();
+      const finalData = {
+        type: "review",
+        order: orderData,
+        rating: selectedRating,
+        text: text || "Без коментаря"
+      };
+
+      tg.sendData(JSON.stringify(finalData));
+    }
+  </script>
 </body>
 </html>
